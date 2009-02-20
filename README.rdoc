@@ -87,6 +87,8 @@ By mixing and matching the "--load-file" and "--user" options with your various 
   
 USING THE "--write-crontab" OPTION WILL COMPLETELY OVERWRITE ANY EXISTING CRONTAB ENTRIES!
 
+You can use --update-crontab to simply update whenever generated tasks.
+
 == Credit
 
 Whenever was created for use at Inkling (http://inklingmarkets.com) where I work.
