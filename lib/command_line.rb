@@ -5,11 +5,11 @@ class CommandLine
   attr_reader :options
   
   def start_marker
-    "### BEGIN #{@makrer} ###"
+    "### BEGIN #{@marker} ###"
   end
   
   def end_marker
-    "### END   #{@makrer} ###"
+    "### END   #{@marker} ###"
   end
   
   def initialize(options = {})

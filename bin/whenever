@@ -15,7 +15,7 @@ OptionParser.new do |opts|
   opts.on('-v', '--version') { puts "Whenever v#{Whenever::VERSION::STRING}"; exit }
   opts.on('-w', '--write-crontab') { options[:write] = true }
   opts.on('-p', '--update-crontab') { options[:update] = true }
-  opts.on('-m', '--marker') { |marker| options[:marker] = marker }
+  opts.on('-m', '--marker [a specific string token]') { |token| options[:marker] = token }
   opts.on('-f', '--load-file [schedule file]', 'default: config/schedule.rb') do |file|
     options[:file] = file if file
   end
