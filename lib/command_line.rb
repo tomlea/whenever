@@ -1,12 +1,20 @@
-
 class CommandLine
   START_MARKER = "### BEGIN whenever generated crontab ###"
   END_MARKER =   "### END   whenever generated crontab ###"
-
+  
   attr_reader :options
-
+  
+  def start_marker
+    "### BEGIN #{@makrer} ###"
+  end
+  
+  def end_marker
+    "### END   #{@makrer} ###"
+  end
+  
   def initialize(options = {})
     @options = options
+    @marker = options[:marker] || "whenever generated crontab"
   end
 
   def write!
@@ -17,15 +25,15 @@ class CommandLine
   def update!
     before, after = strip_whenever_crontab(read_crontab)
     whenever_cron = Whenever.cron(:file => options[:file])
-    write_crontab((before + [START_MARKER, whenever_cron, END_MARKER] + after).compact.join("\n"))
+    write_crontab((before + [start_marker, whenever_cron, end_marker] + after).compact.join("\n"))
   end
 
   private
   def strip_whenever_crontab(existing_crontab)
     return [], [] if existing_crontab.nil? or existing_crontab == ""
     lines = existing_crontab.split("\n")
-    if start = lines.index(START_MARKER)
-      if finish = lines.index(END_MARKER)
+    if start = lines.index(start_marker)
+      if finish = lines.index(end_marker)
         return lines[0...start], lines[(finish + 1)..-1]
       else
         warn "[fail] could not find END marker in existing crontab"
