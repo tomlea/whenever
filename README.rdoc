@@ -89,6 +89,15 @@ USING THE "--write-crontab" OPTION WILL COMPLETELY OVERWRITE ANY EXISTING CRONTA
 
 You can use --update-crontab to simply update whenever generated tasks.
 
+You can use --marker to customize crontab marker for each Rails app
+
+namespace :deploy do
+  desc "write the crontab file"
+  task :write_crontab, :roles => :app do
+    run "cd #{release_path} && whenever --update-crontab --marker crontab_for_my_app_name"
+  end
+end
+
 == Credit
 
 Whenever was created for use at Inkling (http://inklingmarkets.com) where I work.
