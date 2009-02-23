@@ -3,7 +3,7 @@ module Whenever
     MAJOR = 0
     MINOR = 1
     TINY  = 5
-    FORK  = 1
+    FORK  = 2
 
     STRING = [MAJOR, MINOR, TINY, FORK].join('.')
   end
