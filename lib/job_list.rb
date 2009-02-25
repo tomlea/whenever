@@ -8,6 +8,8 @@ module Whenever
       config = case options
         when String then options
         when Hash
+          @cron_log = options[:cron_log] if options.has_key? :cron_log
+          
           if options[:string]
             options[:string]
           elsif options[:file]

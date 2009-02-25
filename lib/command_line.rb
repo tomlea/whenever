@@ -1,30 +1,30 @@
 class CommandLine
   START_MARKER = "### BEGIN whenever generated crontab ###"
   END_MARKER =   "### END   whenever generated crontab ###"
-  
+
   attr_reader :options
-  
+
   def start_marker
     "### BEGIN #{@marker} ###"
   end
-  
+
   def end_marker
     "### END   #{@marker} ###"
   end
-  
+
   def initialize(options = {})
     @options = options
     @marker = options[:marker] || "whenever generated crontab"
   end
 
   def write!
-    cron_output = Whenever.cron(:file => options[:file])
+    cron_output = Whenever.cron(options)
     write_crontab(cron_output)
   end
 
   def update!
     before, after = strip_whenever_crontab(read_crontab)
-    whenever_cron = Whenever.cron(:file => options[:file])
+    whenever_cron = Whenever.cron(options)
     write_crontab((before + [start_marker, whenever_cron, end_marker] + after).compact.join("\n"))
   end
 

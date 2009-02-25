@@ -67,4 +67,22 @@ class OutputCommandTest < Test::Unit::TestCase
     end
   end
   
+  context "A command when the cron_log is not set and the command line sets it instead" do
+    setup do
+      @output = Whenever.cron(
+        :cron_log => "otherlog.log",
+        :string => %%
+            every 2.hours do
+              command "blahblah"
+            end
+        %
+      )
+    end
+    
+    should "output the command with the log syntax appended" do
+      assert_no_match /.+ .+ .+ .+ blahblah >> logfile.log 2>&1/, @output
+      assert_match /^.+ .+ .+ .+ blahblah >> otherlog.log 2>&1$/, @output
+    end
+  end
+  
 end

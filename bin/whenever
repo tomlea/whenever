@@ -16,6 +16,7 @@ OptionParser.new do |opts|
   opts.on('-w', '--write-crontab') { options[:write] = true }
   opts.on('-p', '--update-crontab') { options[:update] = true }
   opts.on('-m', '--marker [a specific string token]') { |token| options[:marker] = token }
+  opts.on('-l', '--cron_log [logfile for cron output]') { |token| options[:cron_log] = token }
   opts.on('-f', '--load-file [schedule file]', 'default: config/schedule.rb') do |file|
     options[:file] = file if file
   end
@@ -38,6 +39,6 @@ if options[:write]
 elsif options[:update]
   command_line.update!
 else
-  puts Whenever.cron(:file => options[:file])
+  puts Whenever.cron(options)
   exit
 end
