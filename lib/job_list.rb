@@ -9,7 +9,7 @@ module Whenever
         when String then options
         when Hash
           @cron_log = options[:cron_log] if options.has_key? :cron_log
-          
+          @no_stderr_redirect = options[:no_stderr_redirect] if options.has_key? :no_stderr_redirect
           if options[:string]
             options[:string]
           elsif options[:file]
@@ -37,6 +37,7 @@ module Whenever
     
     def command(task, options = {})
       options[:cron_log] ||= @cron_log unless options[:cron_log] === false
+      options[:no_stderr_redirect] ||= @no_stderr_redirect unless options[:no_stderr_redirect] === false
       options[:class]    ||= Whenever::Job::Default
       @jobs[@current_time_scope] ||= []
       @jobs[@current_time_scope] << options[:class].new(@options.merge(:task => task).merge(options))
@@ -79,7 +80,8 @@ module Whenever
       @jobs.each do |time, jobs|
         jobs.each do |job|
           cron = Whenever::Output::Cron.output(time, job)
-          cron << " >> #{job.cron_log} 2>&1" if job.cron_log 
+          cron << " >> #{job.cron_log}" if job.cron_log 
+          cron << " 2>&1" if job.cron_log && job.no_stderr_redirect.blank?
           cron << "\n\n"
           output << cron
         end

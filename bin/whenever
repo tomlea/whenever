@@ -17,6 +17,7 @@ OptionParser.new do |opts|
   opts.on('-p', '--update-crontab') { options[:update] = true }
   opts.on('-m', '--marker [a specific string token]') { |token| options[:marker] = token }
   opts.on('-l', '--cron_log [logfile for cron output]') { |token| options[:cron_log] = token }
+  opts.on('-E', '--no-error-redirection') { options[:no_stderr_redirect] = true }
   opts.on('-f', '--load-file [schedule file]', 'default: config/schedule.rb') do |file|
     options[:file] = file if file
   end
